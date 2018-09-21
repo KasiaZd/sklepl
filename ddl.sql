@@ -1,4 +1,14 @@
-create table Uzytkownicy
+-- Schema: LukaszSklep
+
+-- DROP SCHEMA "LukaszSklep";
+
+CREATE SCHEMA "LukaszSklep"
+  AUTHORIZATION postgres;
+
+
+
+
+create table "LukaszSklep".Uzytkownicy
 	(
 		id serial primary key not null,
 		imie varchar not null,
@@ -8,12 +18,12 @@ create table Uzytkownicy
 	    data_aktualizacji date, 
         id_roli integer	
 	);
-create table Role --słownik
+create table "LukaszSklep".Role --słownik
 	( 
 		id serial primary key not null,
 		kod varchar not null
 	); 
-create table Adresy 
+create table "LukaszSklep".Adresy 
 	(
 		id serial primary key not null,
 		miasto varchar not null,
@@ -23,7 +33,7 @@ create table Adresy
 		kod_pocztowy integer not null,
 		id_user integer not null
 	);
-create table Produkty
+create table "LukaszSklep".Produkty
 	(
 		id serial primary key not null,
 		nazwa varchar not null, 
@@ -34,7 +44,7 @@ create table Produkty
 		data_aktualizacji date, 
 		opakowanie varchar
 	);
-create table Zamowienia
+create table "LukaszSklep".Zamowienia
 	(
 		id serial primary key not null,
 		numer integer not null,
@@ -50,12 +60,12 @@ create table Zamowienia
 		id_user integer not null        
 	);
 --tabele pośrednie 
-create table user2adres 
+create table "LukaszSklep".user2adres 
 	(
 		id_user integer not null,
 		id_adres integer not null
 	);
-create table zamow2produk
+create table "LukaszSklep".zamow2produk
 	(
 		id_produkt integer not null, 
 		id_zamowienia integer not null,
