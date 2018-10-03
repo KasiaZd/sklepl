@@ -1,4 +1,4 @@
-create table Uzytkownicy  #tabela do przechowywania danych użytkowników aplikacji. 
+﻿create table Uzytkownicy  #tabela do przechowywania danych użytkowników aplikacji. 
 	(
 		id serial primary key not null,   #id to unikalny numer użytkownika, czasem imiona i nazwiska się powtarzają, ale id jest zawsze unikalny. Serial powoduje, że te numerki będą lecieć sekwencyjnie w górę. 
 		imie varchar not null,
@@ -73,3 +73,9 @@ create table zamow2produk #zamówienia i produkty do zamówień, czyli tak napra
         ilosc integer not null,
         id_opakowanie integer not null
 	);
+
+
+Musisz jeszcze stworzyć usera o nazwie sklep robi się to przez konsolę postgresa, wywołujesz komendy: 
+CREATE USER sklep;
+CREATE DATABASE sklep;
+GRANT ALL PRIVILEGES ON DATABASE sklep to sklep;
