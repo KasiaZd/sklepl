@@ -1,0 +1,75 @@
+create table Uzytkownicy  #tabela do przechowywania danych użytkowników aplikacji. 
+	(
+		id serial primary key not null,   #id to unikalny numer użytkownika, czasem imiona i nazwiska się powtarzają, ale id jest zawsze unikalny. Serial powoduje, że te numerki będą lecieć sekwencyjnie w górę. 
+		imie varchar not null,
+		nazwisko varchar not null,
+		haslo varchar not null, 
+		haslo_szyfrowane varchar not null, 
+	    data_dodania date,
+	    data_aktualizacji date, 
+        id_roli integer	#rola pełniona w systemie, to jest kolumna pomocnicza dzięki której bedziemy mogli stwierdzić kim jest nasz user i jakie strony może widzieć a jakie nie. 
+	);
+create table Role --słownik
+	( 
+		id serial primary key not null, #id jak w poprzedniej tabeli
+		kod varchar not null #kod roli, np Administrator, właściciel sklepu, user zwykły, administrator danych
+	); 
+create table Adresy #tabela przechowująca nasze adresy, nie ma adresów w tabeli użytkowników, ponieważ do jednego konta może być przypisane kilka adresów, np adres domowy, adres do korespondencji, bądź adres wysyłki różny od pozostałych
+	(
+		id serial primary key not null,
+		miasto varchar not null,
+		ulica varchar not null, 
+		numer_domu integer not null,
+		numer_mieszkania integer,
+		kod_pocztowy integer not null,
+		id_user integer not null #id_user łączy nam tabelę userów z adresami
+	);
+create table Produkty #baza produktowa
+	(
+		id serial primary key not null,
+		nazwa varchar not null, 
+		ean integer not null,  #kod ean, unikalny kod produktu. 
+		sku integer not null, #drugi unikalny kod produktu
+		cena integer not null, 
+		data_utworzenia date, 
+		data_aktualizacji date,  
+		id_opakowanie integer #puszka, butelka, luz, słownik 
+	);
+	-- słownik 
+create table Opakowanie #tabelka słownikowa na opakowania
+	(
+		id serial primary key not null, 
+		kod varchar not null,
+		ilosc integer, 
+		jednostka varchar
+	);
+create table Zamowienia #zamówienia, miejsce gdzie składujemy zamówienia.	
+	(
+		id serial primary key not null,
+		numer integer not null,
+		suma integer not null,
+		id_adres integer not null, 
+		numer_przesylki integer not null,
+		firma_przewozowa varchar,
+        czy_dostarczona boolean,
+        data_wysylki date,
+        data_utworzenia date,
+        data_aktualizacji date,
+        wystawil varchar,
+		id_user integer not null        
+	);
+--tabele pośrednie 
+
+create table zamow2produk #zamówienia i produkty do zamówień, czyli tak naprawdę TABELA POŚREDNIA dzięki której możemy mieć wiele zamówień i wiele produktów w #niej.
+	(
+		id_produkt integer not null, 
+		id_zamowienia integer not null,
+		cena integer not null,
+		nazwa varchar not null,
+		sku integer not null,
+		ean integer not null,
+        data_utworzenia date, 
+        data_aktualizacji date,
+        ilosc integer not null,
+        id_opakowanie integer not null
+	);

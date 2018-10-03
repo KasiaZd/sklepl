@@ -58,11 +58,6 @@ create table Zamowienia
 		id_user integer not null        
 	);
 --tabele pośrednie 
-create table user2adres 
-	(
-		id_user integer not null,
-		id_adres integer not null
-	);
 create table zamow2produk
 	(
 		id_produkt integer not null, 
@@ -72,7 +67,9 @@ create table zamow2produk
 		sku integer not null,
 		ean integer not null,
         data_utworzenia date, 
-        data_aktualizacji date
+        data_aktualizacji date,
+        ilosc integer not null,
+        id_opakowanie integer not null
 	);
     
     
